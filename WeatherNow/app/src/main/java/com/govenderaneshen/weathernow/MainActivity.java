@@ -5,11 +5,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private ImageView condition;
+    private int key = 2;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -38,6 +41,23 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
+        condition = (ImageView)findViewById(R.id.imgCondition);
+
+
+        switch(key)
+        {
+            case 1:
+                condition.setImageResource(R.drawable.d);
+                break;
+            case 2:
+                condition.setImageResource(R.drawable.n);
+                break;
+        }
+
+
+
+
 
     }
 
