@@ -14,84 +14,104 @@
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
         android:scaleType="fitXY"
         app:srcCompat="@mipmap/background"
-        android:layout_alignParentTop="true" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
 
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         app:srcCompat="@drawable/weather_now"
-        android:layout_marginEnd="214dp"
-        android:layout_marginBottom="502dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
+        android:layout_marginEnd="68dp"
+        android:layout_marginBottom="120dp"
+        android:layout_marginStart="70dp"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="157dp"
-        android:id="@+id/linearLayout">
+        android:layout_above="@+id/relativeLayout"
+        android:layout_alignParentEnd="true" />
 
-        <TextView
-            android:id="@+id/txtArea"
+
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
-            android:text="Area"
-            android:textColor="@android:color/white"
-            android:textSize="50sp" />
+            android:layout_marginBottom="174dp"
+            android:id="@+id/relativeLayout"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true">
 
-        <TextView
-            android:id="@+id/txtMinTemp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:fontFamily="sans-serif"
-            android:text="Min"
-            android:textColor="@android:color/white"
-            android:textSize="36sp" />
+            <TextView
+                android:id="@+id/txtMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/txtMax"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:fontFamily="sans-serif"
+                android:text="Max"
+                android:textColor="@android:color/black"
+                android:textSize="36sp"
+                android:layout_below="@+id/txtCondition"
+                android:layout_alignEnd="@+id/txtArea"
+                android:layout_alignStart="@+id/txtMinTemp" />
 
-            android:layout_marginTop="57dp"
-            android:fontFamily="sans-serif"
-            android:text="Max"
-            android:textColor="@android:color/white"
-            android:textSize="36sp" />
 
-        <TextView
-            android:id="@+id/txtCondition"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
+            <TextView
+                android:id="@+id/txtMinTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            android:fontFamily="sans-serif"
-            android:text="Condition"
-            android:textColor="@android:color/white"
-            android:textSize="30sp" />
+                android:fontFamily="sans-serif"
+                android:text="Min"
+                android:textColor="@android:color/black"
+                android:textSize="36sp"
+                android:layout_below="@+id/txtArea"
+                android:layout_alignStart="@+id/txtArea"
+                android:layout_marginTop="24dp" />
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
-            android:layout_marginTop="43dp"
-            android:layout_toEndOf="@+id/imageView4"
-            app:srcCompat="@mipmap/ic_launcher" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/txtArea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif"
+                android:text="Area"
+                android:textColor="@android:color/black"
+                android:textSize="50sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="26dp" />
+
+            <TextView
+                android:id="@+id/txtCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignBaseline="@+id/txtMinTemp"
+                android:layout_alignBottom="@+id/txtMinTemp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="43dp"
+                android:fontFamily="sans-serif"
+                android:text="Condition"
+                android:textColor="@android:color/black"
+                android:textSize="30sp" />
+
+            <ImageView
+                android:id="@+id/imgCondition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignStart="@+id/txtCondition"
+                android:layout_below="@+id/txtMinTemp"
+                android:layout_marginStart="35dp"
+                android:layout_weight="0.76"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+
+        </RelativeLayout>
+
 
 
 </RelativeLayout>
