@@ -12,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
     private ImageView condition;
-    private int key = 2;
+    private int key = 1;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         switch(key)
         {
             case 1:
-                condition.setImageResource(R.drawable.d);
+                condition.setImageResource(R.drawable.d3);
                 break;
             case 2:
                 condition.setImageResource(R.drawable.n);

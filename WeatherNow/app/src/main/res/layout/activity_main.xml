@@ -28,29 +28,14 @@
         android:cropToPadding="false"
         app:srcCompat="@drawable/weather_now"
         android:layout_marginEnd="68dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="63dp"
         android:layout_marginStart="70dp"
         android:layout_alignParentStart="true"
         android:layout_above="@+id/relativeLayout"
         android:layout_alignParentEnd="true" />
 
 
-    <ImageView
-        android:id="@+id/imgCondition"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
 
-        android:layout_alignEnd="@+id/imageView4"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageView4"
-        android:layout_below="@+id/imageView4"
-        android:layout_marginBottom="138dp"
-        android:layout_marginStart="151dp"
-        android:layout_marginTop="136dp"
-
-        android:adjustViewBounds="false"
-        android:cropToPadding="false"
-        app:srcCompat="@mipmap/ic_launcher" />
 
     <RelativeLayout
             android:layout_width="wrap_content"
@@ -117,6 +102,19 @@
 
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/imgCondition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/d"
+        android:layout_marginTop="97dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="53dp"
+        android:layout_marginStart="132dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="151dp"
+        android:layout_alignTop="@+id/relativeLayout"
+        android:layout_alignStart="@+id/imageView4" />
 
 
 </RelativeLayout>
