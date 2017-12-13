@@ -1,5 +1,6 @@
 package com.govenderaneshen.weathernow;
 
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -12,6 +13,47 @@ import android.os.Bundle;
 
 public class GPSCoordinatesFinder implements LocationListener
 {
+
+    /*
+        Global Context Variable
+     */
+    private Context context;
+
+    /**
+     * @param AppContext
+     * Constructor to set the current Application context
+     */
+    public GPSCoordinatesFinder(Context AppContext)
+    {
+        context = AppContext;
+    }
+
+    /**
+     *
+     * @return current location of the user
+     */
+//    public Location getCurrentLocation()
+//    {
+//        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+//
+//        /*
+//            Check to see whether the users device has the GPS enabled
+//         */
+//        boolean isGPSenabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
+//
+//        if(isGPSenabled == true)
+//        {
+//
+//        }
+//        else
+//        {
+//            Toast.makeText(context,"Please Enable the GPS in order to proceed",Toast.LENGTH_LONG).show();
+//        }
+//
+//
+//    }
+
+
 
     /**
      * Called when the location has changed.
