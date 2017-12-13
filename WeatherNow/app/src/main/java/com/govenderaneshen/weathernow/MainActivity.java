@@ -1,3 +1,4 @@
+
 package com.govenderaneshen.weathernow;
 
 import android.os.Bundle;
@@ -8,11 +9,23 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * @author Govender Aneshen
+ * Main Activity class which excecutes code to output the current Weather to the user
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /*
+     * Global Variables
+     */
     private TextView mTextMessage;
     private ImageView condition;
+
+    /*
+     * Key value assigned to the different weather condition icons
+     */
     private int key = 1;
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -35,16 +48,29 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        /*
+         * Hiding of the Action bar of the activity
+         */
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
+        /*
+         * Initialization of the condition ImageView
+         */
         condition = (ImageView)findViewById(R.id.imgCondition);
 
 
+        /*
+         * Switch statement to allocate the correct icon based on the weather condition
+         */
         switch(key)
         {
             case 1:
