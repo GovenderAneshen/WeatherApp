@@ -11,4 +11,10 @@ public class TemperatureConversions
     {
         return (int)(tempKel - 273.15);
     }
+
+    public int kelvinToFahrenheit(Double tempKel)
+    {
+        return (int)(((9/5)*kelvinToCelsius(tempKel)) + 32);
+    }
+
 }
