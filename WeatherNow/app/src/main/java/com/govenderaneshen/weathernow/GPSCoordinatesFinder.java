@@ -1,9 +1,14 @@
 package com.govenderaneshen.weathernow;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
 /**
  * @author Govender Aneshen
@@ -32,26 +37,39 @@ public class GPSCoordinatesFinder implements LocationListener
      *
      * @return current location of the user
      */
-//    public Location getCurrentLocation()
-//    {
-//        LocationManager locationManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
-//
-//        /*
-//            Check to see whether the users device has the GPS enabled
-//         */
-//        boolean isGPSenabled = locationManager.isProviderEnabled(locationManager.GPS_PROVIDER);
-//
-//        if(isGPSenabled == true)
-//        {
-//
-//        }
-//        else
-//        {
-//            Toast.makeText(context,"Please Enable the GPS in order to proceed",Toast.LENGTH_LONG).show();
-//        }
-//
-//
-//    }
+    public Location getCurrentLocation()
+    {
+        /*
+         *Permissions check
+         */
+        if(ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            Toast.makeText(context,"Permission not granted",Toast.LENGTH_SHORT).show();
+            return null;
+        }
+
+        LocationManager locManager = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+
+        /*
+            Check to see whether the users device has the GPS enabled
+         */
+        boolean isGPSenabled = locManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if(isGPSenabled == true)
+        {
+            locManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,6000,10,this);
+            Location loc = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            return loc;
+        }
+        else
+        {
+            Toast.makeText(context,"Please Enable the GPS in order to proceed",Toast.LENGTH_LONG).show();
+        }
+
+        return null;
+
+
+    }
 
 
 
