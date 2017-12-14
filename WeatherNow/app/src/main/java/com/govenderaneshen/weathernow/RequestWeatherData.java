@@ -2,6 +2,9 @@ package com.govenderaneshen.weathernow;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -83,10 +86,38 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
 
     /**
      * Method that extracts the required data
-     * @param s The weather results
+     * @param result The weather results
      */
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+
+
+        try
+        {
+            /*
+                Main JSON object from the OpenWeatherApp API
+             */
+            JSONObject jsonObject = new JSONObject(result);
+
+            JSONObject weatherData = new JSONObject(jsonObject.getString("main"));
+            JSONObject conditionsData = new JSONObject(jsonObject.getString("weather"));
+
+            String areaName = jsonObject.getString("name");
+            Double tempMinKal = Double.parseDouble(weatherData.getString("temp_min"));
+            Double tempMaxKal = Double.parseDouble(weatherData.getString("temp_max"));
+
+
+        }
+
+
+        /*
+            Error with JSON result
+         */
+        catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
