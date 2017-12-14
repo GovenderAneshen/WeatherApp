@@ -45,7 +45,7 @@
         android:id="@+id/imgCondition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/d"
+        app:srcCompat="@drawable/cloud"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="73dp"
         android:layout_alignBottom="@+id/linearLayout2"
