@@ -2,7 +2,7 @@ package com.govenderaneshen.weathernow;
 
 /**
  * @author Govender Aneshen
- * Class containing functions for converting temperatures from Kelvin to Celsius or Fahrenheit and vise versa
+ * Class containing functions for converting temperatures from Kelvin to Celsius or Fahrenheit
  */
 
 public class TemperatureConversions

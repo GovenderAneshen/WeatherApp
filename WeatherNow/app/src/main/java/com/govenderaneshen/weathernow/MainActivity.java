@@ -22,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
     /*
      * Global Variables
      */
-    private TextView mTextMessage;
-    private ImageView condition;
+    static ImageView condition;
+    static TextView AreaView;
+    static TextView minTempView;
+    static TextView maxTempView;
+    static TextView ConditionView;
+
 
     private double currentLongitude;
     private double currentLatitude;
@@ -41,15 +45,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
-                    return true;
-                case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
-                    return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
+
             }
             return false;
         }
@@ -77,9 +73,14 @@ public class MainActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION},123);
 
         /*
-         * Initialization of the condition ImageView
+         * Initialization of the condition ImageView and Textviews
          */
         condition = (ImageView)findViewById(R.id.imgCondition);
+        AreaView = (TextView)findViewById(R.id.txtArea);
+        minTempView = (TextView)findViewById(R.id.txtMinTemp);
+        maxTempView = (TextView)findViewById(R.id.txtMax);
+        ConditionView = (TextView)findViewById(R.id.txtCondition);
+
 
 
         /*
@@ -108,7 +109,10 @@ public class MainActivity extends AppCompatActivity {
         {
             currentLongitude = location.getLongitude();
             currentLatitude = location.getLatitude();
-            Toast.makeText(getApplicationContext(),"Longitude: " + String.valueOf(currentLongitude) + "/n Latitude: "+ String.valueOf(currentLatitude),Toast.LENGTH_LONG).show();
+
+            RequestWeatherData weatherData = new RequestWeatherData();
+            String url = "http://api.openweathermap.org/data/2.5/weather?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&appid=83f02b94f16881850e678ca1b96731a5";
+            weatherData.execute(url);
         }
         else
         {

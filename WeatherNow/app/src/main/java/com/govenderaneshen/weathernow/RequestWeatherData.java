@@ -27,6 +27,7 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
     private URL weatherURL;
     private HttpURLConnection urlConnection = null;
 
+
     /**
      * Used to retrieve the weather data
      * @param url The url parameter
@@ -93,6 +94,7 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
         super.onPostExecute(result);
 
 
+
         try
         {
             /*
@@ -100,14 +102,29 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
              */
             JSONObject jsonObject = new JSONObject(result);
 
+            /*
+                JSON objects of separate weather information
+             */
             JSONObject weatherData = new JSONObject(jsonObject.getString("main"));
             JSONObject conditionsData = new JSONObject(jsonObject.getString("weather"));
 
+            /*
+                Retrieving Data from JSON object
+             */
+            TemperatureConversions tempCelsius = new TemperatureConversions();
             String areaName = jsonObject.getString("name");
-            Double tempMinKal = Double.parseDouble(weatherData.getString("temp_min"));
-            Double tempMaxKal = Double.parseDouble(weatherData.getString("temp_max"));
+            String weatherDescription = conditionsData.getString("description");
+            String conditionsCode = conditionsData.getString("icon");
+            int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(weatherData.getString("temp_min")));
+            int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(weatherData.getString("temp_max")));
 
-
+            /*
+                Setting text in textViews
+             */
+            MainActivity.AreaView.setText(areaName);
+            MainActivity.minTempView.setText("Min: "+tempMin+ " °C");
+            MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
+            MainActivity.ConditionView.setText(weatherDescription);
         }
 
 
