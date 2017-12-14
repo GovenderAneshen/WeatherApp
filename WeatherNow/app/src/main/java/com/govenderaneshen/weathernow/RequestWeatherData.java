@@ -14,6 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.govenderaneshen.weathernow.MainActivity.condition;
+
 /**
  * @author Govender Aneshen
  * Class is used to send the current location to the OpenWeatherApp API to obtain the current weather conditions
@@ -141,6 +143,69 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
                 MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
                 MainActivity.ConditionView.setText(weatherDescription);
                 MainActivity.AreaView.setText(areaName);
+        /*
+         * Switch statement to allocate the correct icon based on the weather condition
+         */
+
+            switch(conditionsCode)
+            {
+                case "01d":
+                    condition.setImageResource(R.drawable.sun);
+                    break;
+                case "01n":
+                    condition.setImageResource(R.drawable.moon);
+                    break;
+                case "02d":
+                    condition.setImageResource(R.drawable.daycloud);
+                    break;
+                case "02n":
+                    condition.setImageResource(R.drawable.nightcloud);
+                    break;
+                case "03d":
+                    condition.setImageResource(R.drawable.cloud);
+                    break;
+                case "03n":
+                    condition.setImageResource(R.drawable.cloud);
+                    break;
+                case "04d":
+                    condition.setImageResource(R.drawable.brokencloud);
+                    break;
+                case "04n":
+                    condition.setImageResource(R.drawable.brokencloud);
+                    break;
+                case "09d":
+                    condition.setImageResource(R.drawable.showers);
+                    break;
+                case "09n":
+                    condition.setImageResource(R.drawable.showers);
+                    break;
+                case "10d":
+                    condition.setImageResource(R.drawable.rainday);
+                    break;
+                case "10n":
+                    condition.setImageResource(R.drawable.rainnight);
+                    break;
+                case "11d":
+                    condition.setImageResource(R.drawable.thunder);
+                    break;
+                case "11n":
+                    condition.setImageResource(R.drawable.thunder);
+                    break;
+                case "13d":
+                    condition.setImageResource(R.drawable.snow);
+                    break;
+                case "13n":
+                    condition.setImageResource(R.drawable.snow);
+                    break;
+                case "50d":
+                    condition.setImageResource(R.drawable.mist);
+                    break;
+                case "50n":
+                    condition.setImageResource(R.drawable.mist);
+                    break;
+            }
+
+
 
         }
 

@@ -82,22 +82,6 @@ public class MainActivity extends AppCompatActivity {
         ConditionView = (TextView)findViewById(R.id.txtCondition);
 
 
-
-        /*
-         * Switch statement to allocate the correct icon based on the weather condition
-         */
-
-        switch(conditionCode)
-        {
-            case "111":
-                condition.setImageResource(R.drawable.d3);
-                break;
-            case "3d0":
-                condition.setImageResource(R.drawable.n);
-                break;
-        }
-
-
         /* Create an instance of the GPSCoordinateFinder class */
         GPSCoordinatesFinder GPS = new GPSCoordinatesFinder(getApplicationContext());
 
