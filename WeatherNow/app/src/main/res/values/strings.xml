@@ -3,8 +3,8 @@
     <string name="title_home">Home Weather now</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="Area">Area</string>
-    <string name="MinTemp">Min</string>
-    <string name="MaxTemp">Max</string>
-    <string name="Condition">Condition</string>
+    <string name="Area"></string>
+    <string name="MinTemp"></string>
+    <string name="MaxTemp"></string>
+    <string name="Condition"></string>
 </resources>

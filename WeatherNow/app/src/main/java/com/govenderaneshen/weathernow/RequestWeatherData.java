@@ -2,6 +2,7 @@ package com.govenderaneshen.weathernow;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.view.View;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,7 +140,7 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
                 Setting text in textViews
              */
 
-                MainActivity.minTempView.setText("Min: "+tempMin+ " °C");
+                MainActivity.minTempView.setText("Min:  "+tempMin+ " °C");
                 MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
                 MainActivity.ConditionView.setText(weatherDescription);
                 MainActivity.AreaView.setText(areaName);
@@ -204,6 +205,8 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
                     condition.setImageResource(R.drawable.mist);
                     break;
             }
+
+            MainActivity.load.setVisibility(View.GONE);
 
 
 

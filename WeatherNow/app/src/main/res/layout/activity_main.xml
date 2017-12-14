@@ -3,75 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:backgroundTint="@android:color/background_dark"
     android:orientation="vertical"
     tools:context="com.govenderaneshen.weathernow.MainActivity">
 
 <!-- Background Image-->
 
+
+
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        app:srcCompat="@mipmap/background"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        app:srcCompat="@mipmap/background" />
 
 <!-- Logo for the application-->
+
+
+    <!-- Layout containing components to display the respective weather to the user-->
+
+    <!-- Weather condition icon-->
+
+
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_x="0dp"
+        android:layout_y="6dp"
         android:adjustViewBounds="false"
         android:cropToPadding="false"
         app:srcCompat="@drawable/weather_now"
-        android:layout_marginBottom="112dp"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignEnd="@+id/imgCondition"
-        android:layout_marginEnd="13dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_x="0dp"
+        android:layout_y="103dp"
+
+        android:layout_below="@+id/imageView4"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="60dp" />
-
-
-
-<!-- Layout containing components to display the respective weather to the user-->
-
-    <!-- Weather condition icon-->
-    <ImageView
-        android:id="@+id/imgCondition"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/cloud"
-        android:layout_marginEnd="55dp"
-        android:layout_marginBottom="73dp"
-        android:layout_alignBottom="@+id/linearLayout2"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/linearLayout2"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="183dp"
-        android:layout_marginTop="118dp" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:weightSum="1"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="14dp"
-        android:id="@+id/linearLayout2">
+        android:layout_alignBottom="@+id/btnRefresh"
+        android:layout_marginBottom="52dp">
 
         <TextView
             android:id="@+id/txtArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/txtCondition"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="17dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif"
             android:text="@string/Area"
             android:textColor="@android:color/black"
@@ -82,23 +71,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_alignEnd="@+id/txtMax"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="72dp"
+            android:layout_below="@+id/txtMax"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:layout_weight="0.20"
+            android:capitalize="none"
             android:fontFamily="sans-serif"
+            android:foregroundGravity="center"
+            android:singleLine="true"
             android:text="@string/Condition"
+            android:textAlignment="center"
+            android:textAllCaps="true"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:layout_weight="0.20" />
+            android:textSize="26sp" />
 
         <TextView
             android:id="@+id/txtMinTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_alignStart="@+id/txtMax"
-            android:layout_below="@+id/txtMax"
-            android:layout_marginTop="27dp"
+            android:layout_alignStart="@+id/txtArea"
+            android:layout_below="@+id/txtArea"
+            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif"
             android:text="@string/MinTemp"
             android:textColor="@android:color/black"
@@ -109,14 +103,51 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
-            android:layout_below="@+id/txtArea"
-            android:layout_marginTop="63dp"
-            android:layout_toStartOf="@+id/txtArea"
+            android:layout_alignStart="@+id/txtArea"
+            android:layout_below="@+id/txtMinTemp"
+            android:layout_marginTop="20dp"
             android:fontFamily="sans-serif"
             android:text="@string/MaxTemp"
             android:textColor="@android:color/black"
             android:textSize="30sp" />
-    </LinearLayout>
 
+        <ImageView
+            android:id="@+id/imgCondition"
+            android:layout_width="193dp"
+            android:layout_height="232dp"
+
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@+id/txtArea"
+            android:layout_marginTop="23dp"
+            android:foregroundGravity="bottom|center_horizontal"
+            android:visibility="visible" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtArea"
+            android:layout_centerHorizontal="true"
+            android:progressTint="@color/colorPrimary" />
+
+
+    </RelativeLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+
+        android:layout_x="171dp"
+        android:layout_y="463dp"
+        android:clickable="true"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="mini"
+        app:srcCompat="@android:drawable/ic_popup_sync"
+        android:layout_marginBottom="21dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

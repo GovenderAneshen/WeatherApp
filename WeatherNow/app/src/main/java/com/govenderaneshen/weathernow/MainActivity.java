@@ -2,14 +2,18 @@
 package com.govenderaneshen.weathernow;
 
 import android.Manifest;
+import android.graphics.PorterDuff;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
     static TextView minTempView;
     static TextView maxTempView;
     static TextView ConditionView;
+    static ProgressBar load;
 
 
     private double currentLongitude;
     private double currentLatitude;
+
 
 
     /*
@@ -51,6 +57,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
+    /**
+     * function to refresh details
+     */
+    public void refresh()
+    {
+         /* Create an instance of the GPSCoordinateFinder class */
+        GPSCoordinatesFinder GPS = new GPSCoordinatesFinder(getApplicationContext());
+
+        /* Getting the Location */
+        Location location = GPS.getCurrentLocation();
+
+        /* If the Location if found*/
+        if(location != null)
+        {
+            currentLongitude = location.getLongitude();
+            currentLatitude = location.getLatitude();
+
+            RequestWeatherData weatherData = new RequestWeatherData(getApplicationContext());
+            String url = "http://api.openweathermap.org/data/2.5/weather?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&appid=83f02b94f16881850e678ca1b96731a5";
+            weatherData.execute(url);
+
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(),"Please Refresh",Toast.LENGTH_LONG).show();
+        }
+
+    }
 
     /**
      *
@@ -80,32 +115,24 @@ public class MainActivity extends AppCompatActivity {
         minTempView = (TextView)findViewById(R.id.txtMinTemp);
         maxTempView = (TextView)findViewById(R.id.txtMax);
         ConditionView = (TextView)findViewById(R.id.txtCondition);
+        load = (ProgressBar)findViewById(R.id.progressBar);
+
+        load.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);
 
 
-        /* Create an instance of the GPSCoordinateFinder class */
-        GPSCoordinatesFinder GPS = new GPSCoordinatesFinder(getApplicationContext());
+       refresh();
 
-        /* Getting the Location */
-        Location location = GPS.getCurrentLocation();
-
-        /* If the Location if found*/
-        if(location != null)
-        {
-            currentLongitude = location.getLongitude();
-            currentLatitude = location.getLatitude();
-
-            RequestWeatherData weatherData = new RequestWeatherData(getApplicationContext());
-            String url = "http://api.openweathermap.org/data/2.5/weather?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&appid=83f02b94f16881850e678ca1b96731a5";
-            weatherData.execute(url);
-
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(),"Please Refresh",Toast.LENGTH_LONG).show();
-        }
-
-
-
+        /*
+            Refresh Button
+         */
+        FloatingActionButton refresh = (FloatingActionButton)findViewById(R.id.btnRefresh);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                load.setVisibility(View.GONE);
+                recreate();
+            }
+        });
 
 
 
