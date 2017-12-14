@@ -110,9 +110,10 @@ public class MainActivity extends AppCompatActivity {
             currentLongitude = location.getLongitude();
             currentLatitude = location.getLatitude();
 
-            RequestWeatherData weatherData = new RequestWeatherData();
+            RequestWeatherData weatherData = new RequestWeatherData(getApplicationContext());
             String url = "http://api.openweathermap.org/data/2.5/weather?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&appid=83f02b94f16881850e678ca1b96731a5";
             weatherData.execute(url);
+
         }
         else
         {

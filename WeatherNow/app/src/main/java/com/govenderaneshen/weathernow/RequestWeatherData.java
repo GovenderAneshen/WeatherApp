@@ -1,7 +1,9 @@
 package com.govenderaneshen.weathernow;
 
+import android.content.Context;
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,7 +28,14 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
     private String weatherResults;
     private URL weatherURL;
     private HttpURLConnection urlConnection = null;
+    private Context thisContext;
+    public String areaName;
 
+
+    public RequestWeatherData(Context context)
+    {
+        thisContext = context;
+    }
 
     /**
      * Used to retrieve the weather data
@@ -42,6 +51,7 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
                 Retrieving of the weather data using URL Connection
              */
             weatherURL = new URL(url[0]);
+
             urlConnection = (HttpURLConnection)weatherURL.openConnection();
 
             InputStream retrieveData = urlConnection.getInputStream();
@@ -61,7 +71,9 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
 
             }
 
+
             return weatherResults;
+
 
 
         }
@@ -99,34 +111,38 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
         {
             /*
                 Main JSON object from the OpenWeatherApp API
-             */
-            JSONObject jsonObject = new JSONObject(result);
+            */
+            JSONObject jsresponse = new JSONObject(result.substring(result.indexOf("{"),result.lastIndexOf("}")+1));
 
             /*
                 JSON objects of separate weather information
-             */
-            JSONObject weatherData = new JSONObject(jsonObject.getString("main"));
-            JSONObject conditionsData = new JSONObject(jsonObject.getString("weather"));
+            */
+            JSONObject jsonWeather = jsresponse.getJSONObject("main");
+            JSONArray jsonConditionArray = jsresponse.optJSONArray("weather");
+            JSONObject jsonCondition = jsonConditionArray.getJSONObject(0);
 
-            /*
-                Retrieving Data from JSON object
-             */
+
+             /*
+            Retrieving Data from JSON object
+            */
             TemperatureConversions tempCelsius = new TemperatureConversions();
-            String areaName = jsonObject.getString("name");
-            String weatherDescription = conditionsData.getString("description");
-            String conditionsCode = conditionsData.getString("icon");
-            int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(weatherData.getString("temp_min")));
-            int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(weatherData.getString("temp_max")));
+            areaName = jsresponse.getString("name");
+            String weatherDescription = jsonCondition.getString("description");
+            String conditionsCode = jsonCondition.getString("icon");
+            int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_min")));
+            int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_max")));
+
 
             /*
                 Setting text in textViews
              */
-            MainActivity.AreaView.setText(areaName);
-            MainActivity.minTempView.setText("Min: "+tempMin+ " °C");
-            MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
-            MainActivity.ConditionView.setText(weatherDescription);
-        }
 
+                MainActivity.minTempView.setText("Min: "+tempMin+ " °C");
+                MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
+                MainActivity.ConditionView.setText(weatherDescription);
+                MainActivity.AreaView.setText(areaName);
+
+        }
 
         /*
             Error with JSON result
