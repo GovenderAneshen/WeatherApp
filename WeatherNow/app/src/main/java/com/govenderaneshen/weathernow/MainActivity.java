@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
             currentLatitude = location.getLatitude();
 
             RequestWeatherData weatherData = new RequestWeatherData(getApplicationContext());
-            String url = "http://api.openweathermap.org/data/2.5/forecast?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&appid=83f02b94f16881850e678ca1b96731a5";
+            String url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&cnt=6&appid=927d09bc49dbee6aac7f5cb1df707542";
             weatherData.execute(url);
 
         }

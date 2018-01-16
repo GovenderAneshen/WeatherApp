@@ -198,16 +198,15 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
             Retrieving Data from JSON object
             */
                 JSONObject jsonWeatherObject =  jsonList.getJSONObject(i);
-                JSONObject jsonWeather = jsonWeatherObject.getJSONObject("main");
                 JSONArray jsonConditionArray = jsonWeatherObject.optJSONArray("weather");
                 JSONObject jsonCondition = jsonConditionArray.getJSONObject(0);
-
+                JSONObject jsonTemp = jsonWeatherObject.getJSONObject("temp");
 
                 String date = jsonWeatherObject.getString("dt");
                 String weatherDescription = jsonCondition.getString("description");
                 String conditionsCode = jsonCondition.getString("icon");
-                int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_min")));
-                int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_max")));
+                int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonTemp.getString("min")));
+                int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonTemp.getString("max")));
 
                 forecast[i] = new weather(Long.valueOf(date),weatherDescription,conditionsCode,tempMin,tempMax);
 
@@ -221,7 +220,7 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
             /*
                 Setting text in textViews
              */
-                areaName = jsonCity .getString("name");
+                areaName = jsonCity.getString("name");
 //                MainActivity.minTempView.setText("Min:  "+tempMin+ " °C");
 //                MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
 //                MainActivity.ConditionView.setText(weatherDescription);
