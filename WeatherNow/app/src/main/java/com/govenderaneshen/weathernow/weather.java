@@ -37,6 +37,8 @@ public class weather
         this.conditionsCode = conditionsCode;
         this.tempMin = tempMin;
         this.tempMax = tempMax;
+        date = new Date();
+
 
         /*
             Getting the date and day of the week
@@ -45,8 +47,9 @@ public class weather
         SimpleDateFormat dateFormatday = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
         dateFormatday.applyPattern("EEEE");
         Date newdate = new Date(dateStamp*1000);
-        setDay(dateFormatday.format(getDate()));
         setDate(newdate);
+        setDay(dateFormatday.format(getDate()));
+
 
     }
 

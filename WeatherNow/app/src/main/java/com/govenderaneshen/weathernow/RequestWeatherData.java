@@ -3,6 +3,8 @@ package com.govenderaneshen.weathernow;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,11 +35,76 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
     private HttpURLConnection urlConnection = null;
     private Context thisContext;
     public String areaName;
+    private weather[] forecast;
 
 
     public RequestWeatherData(Context context)
     {
         thisContext = context;
+    }
+
+    public void SetImage(ImageView imgCondition, String conditionsCode)
+    {
+        /*
+         * Switch statement to allocate the correct icon based on the weather condition
+         */
+
+        switch (conditionsCode) {
+            case "01d":
+                condition.setImageResource(R.drawable.sun);
+                break;
+            case "01n":
+                condition.setImageResource(R.drawable.moon);
+                break;
+            case "02d":
+                condition.setImageResource(R.drawable.daycloud);
+                break;
+            case "02n":
+                condition.setImageResource(R.drawable.nightcloud);
+                break;
+            case "03d":
+                condition.setImageResource(R.drawable.cloud);
+                break;
+            case "03n":
+                condition.setImageResource(R.drawable.cloud);
+                break;
+            case "04d":
+                condition.setImageResource(R.drawable.brokencloud);
+                break;
+            case "04n":
+                condition.setImageResource(R.drawable.brokencloud);
+                break;
+            case "09d":
+                condition.setImageResource(R.drawable.showers);
+                break;
+            case "09n":
+                condition.setImageResource(R.drawable.showers);
+                break;
+            case "10d":
+                condition.setImageResource(R.drawable.rainday);
+                break;
+            case "10n":
+                condition.setImageResource(R.drawable.rainnight);
+                break;
+            case "11d":
+                condition.setImageResource(R.drawable.thunder);
+                break;
+            case "11n":
+                condition.setImageResource(R.drawable.thunder);
+                break;
+            case "13d":
+                condition.setImageResource(R.drawable.snow);
+                break;
+            case "13n":
+                condition.setImageResource(R.drawable.snow);
+                break;
+            case "50d":
+                condition.setImageResource(R.drawable.mist);
+                break;
+            case "50n":
+                condition.setImageResource(R.drawable.mist);
+                break;
+        }
     }
 
     /**
@@ -120,90 +187,53 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
             /*
                 JSON objects of separate weather information
             */
-            JSONObject jsonWeather = jsresponse.getJSONObject("main");
-            JSONArray jsonConditionArray = jsresponse.optJSONArray("weather");
-            JSONObject jsonCondition = jsonConditionArray.getJSONObject(0);
+            JSONArray jsonList = jsresponse.optJSONArray("list");
+            forecast = new weather[jsonList.length()];
+            JSONObject jsonCity = jsresponse.getJSONObject("city");
+            TemperatureConversions tempCelsius = new TemperatureConversions();
 
-
-             /*
+            for(int i =0;i<jsonList.length();i++)
+            {
+                   /*
             Retrieving Data from JSON object
             */
-            TemperatureConversions tempCelsius = new TemperatureConversions();
-            areaName = jsresponse.getString("name");
-            String weatherDescription = jsonCondition.getString("description");
-            String conditionsCode = jsonCondition.getString("icon");
-            int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_min")));
-            int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_max")));
+                JSONObject jsonWeatherObject =  jsonList.getJSONObject(i);
+                JSONObject jsonWeather = jsonWeatherObject.getJSONObject("main");
+                JSONArray jsonConditionArray = jsonWeatherObject.optJSONArray("weather");
+                JSONObject jsonCondition = jsonConditionArray.getJSONObject(0);
+
+
+                String date = jsonWeatherObject.getString("dt");
+                String weatherDescription = jsonCondition.getString("description");
+                String conditionsCode = jsonCondition.getString("icon");
+                int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_min")));
+                int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_max")));
+
+                forecast[i] = new weather(Long.valueOf(date),weatherDescription,conditionsCode,tempMin,tempMax);
+
+            }
+
+
+
+
 
 
             /*
                 Setting text in textViews
              */
-
-                MainActivity.minTempView.setText("Min:  "+tempMin+ " °C");
-                MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
-                MainActivity.ConditionView.setText(weatherDescription);
+                areaName = jsonCity .getString("name");
+//                MainActivity.minTempView.setText("Min:  "+tempMin+ " °C");
+//                MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
+//                MainActivity.ConditionView.setText(weatherDescription);
                 MainActivity.AreaView.setText(areaName);
-        /*
-         * Switch statement to allocate the correct icon based on the weather condition
-         */
 
-            switch(conditionsCode)
+            for(int i =0;i<jsonList.length();i++)
             {
-                case "01d":
-                    condition.setImageResource(R.drawable.sun);
-                    break;
-                case "01n":
-                    condition.setImageResource(R.drawable.moon);
-                    break;
-                case "02d":
-                    condition.setImageResource(R.drawable.daycloud);
-                    break;
-                case "02n":
-                    condition.setImageResource(R.drawable.nightcloud);
-                    break;
-                case "03d":
-                    condition.setImageResource(R.drawable.cloud);
-                    break;
-                case "03n":
-                    condition.setImageResource(R.drawable.cloud);
-                    break;
-                case "04d":
-                    condition.setImageResource(R.drawable.brokencloud);
-                    break;
-                case "04n":
-                    condition.setImageResource(R.drawable.brokencloud);
-                    break;
-                case "09d":
-                    condition.setImageResource(R.drawable.showers);
-                    break;
-                case "09n":
-                    condition.setImageResource(R.drawable.showers);
-                    break;
-                case "10d":
-                    condition.setImageResource(R.drawable.rainday);
-                    break;
-                case "10n":
-                    condition.setImageResource(R.drawable.rainnight);
-                    break;
-                case "11d":
-                    condition.setImageResource(R.drawable.thunder);
-                    break;
-                case "11n":
-                    condition.setImageResource(R.drawable.thunder);
-                    break;
-                case "13d":
-                    condition.setImageResource(R.drawable.snow);
-                    break;
-                case "13n":
-                    condition.setImageResource(R.drawable.snow);
-                    break;
-                case "50d":
-                    condition.setImageResource(R.drawable.mist);
-                    break;
-                case "50n":
-                    condition.setImageResource(R.drawable.mist);
-                    break;
+
+
+                Toast.makeText(thisContext,forecast[i].getDay(),Toast.LENGTH_LONG).show();
+
+
             }
 
             MainActivity.load.setVisibility(View.GONE);
