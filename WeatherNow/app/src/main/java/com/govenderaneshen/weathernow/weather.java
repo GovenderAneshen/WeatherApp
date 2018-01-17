@@ -43,7 +43,6 @@ public class weather
         /*
             Getting the date and day of the week
          */
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
         SimpleDateFormat dateFormatday = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
         dateFormatday.applyPattern("EEEE");
         Date newdate = new Date(dateStamp*1000);

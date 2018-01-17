@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import static com.govenderaneshen.weathernow.MainActivity.condition;
 
@@ -43,7 +45,7 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
         thisContext = context;
     }
 
-    public void SetImage(ImageView imgCondition, String conditionsCode)
+    public void setImage(ImageView imgCondition, String conditionsCode)
     {
         /*
          * Switch statement to allocate the correct icon based on the weather condition
@@ -213,18 +215,19 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
             }
 
 
-
-
-
-
             /*
                 Setting text in textViews
              */
-                areaName = jsonCity.getString("name");
-//                MainActivity.minTempView.setText("Min:  "+tempMin+ " °C");
-//                MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
-//                MainActivity.ConditionView.setText(weatherDescription);
-                MainActivity.AreaView.setText(areaName);
+            areaName = jsonCity.getString("name");
+            MainActivity.minTempView.setText("Min:  "+forecast[0].getTempMin()+ " °C");
+            MainActivity.maxTempView.setText("Max: "+forecast[0].getTempMax()+ " °C");
+            MainActivity.ConditionView.setText(forecast[0].getWeatherDescription());
+            MainActivity.AreaView.setText(areaName);
+            setImage(MainActivity.condition,forecast[0].getConditionsCode());
+
+            SimpleDateFormat dateFormatday = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
+            dateFormatday.applyPattern("EEEE, dd MMM yyyy");
+            MainActivity.date.setText(dateFormatday.format(forecast[0].getDate()));
 
             for(int i =0;i<jsonList.length();i++)
             {
@@ -234,6 +237,11 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
 
 
             }
+
+            /*
+                Dealing with the forecast for 5 days
+             */
+            MainActivity.tblForecast.removeAllViewsInLayout();
 
             MainActivity.load.setVisibility(View.GONE);
 

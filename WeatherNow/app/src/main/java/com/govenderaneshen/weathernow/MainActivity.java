@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     static TextView minTempView;
     static TextView maxTempView;
     static TextView ConditionView;
+    static TextView date;
+    static TableLayout tblForecast;
     static ProgressBar load;
 
 
@@ -115,6 +118,8 @@ public class MainActivity extends AppCompatActivity {
         minTempView = (TextView)findViewById(R.id.txtMinTemp);
         maxTempView = (TextView)findViewById(R.id.txtMax);
         ConditionView = (TextView)findViewById(R.id.txtCondition);
+        date = (TextView)findViewById(R.id.txtDate);
+        tblForecast = (TableLayout)findViewById(R.id.tblForecast);
         load = (ProgressBar)findViewById(R.id.progressBar);
 
         load.getIndeterminateDrawable().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.MULTIPLY);

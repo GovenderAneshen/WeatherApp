@@ -54,13 +54,27 @@
         android:layout_marginBottom="52dp">
 
         <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="27dp"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:text="@string/Date"/>
+
+        <TextView
             android:id="@+id/txtArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/txtDate"
+            android:layout_alignTop="@+id/txtDate"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="13dp"
             android:fontFamily="sans-serif"
             android:text="@string/Area"
             android:textColor="@android:color/black"
@@ -85,6 +99,7 @@
             android:textColor="@android:color/black"
             android:textSize="26sp" />
 
+
         <TextView
             android:id="@+id/txtMinTemp"
             android:layout_width="wrap_content"
@@ -95,7 +110,7 @@
             android:layout_marginTop="25dp"
             android:fontFamily="sans-serif"
             android:text="@string/MinTemp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/minGreen"
             android:textSize="30sp" />
 
         <TextView
@@ -108,7 +123,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="sans-serif"
             android:text="@string/MaxTemp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/maxRed"
             android:textSize="30sp" />
 
         <ImageView
@@ -149,5 +164,31 @@
         android:layout_marginBottom="21dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TableLayout
+        android:id="@+id/tblForecast"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView4"
+        android:layout_marginTop="233dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
 
 </RelativeLayout>
