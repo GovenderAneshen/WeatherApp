@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AccessData{
     private double currentLatitude;
 
     /**
-     *
+     * This Method sets the imageResource for the given Imageview
      * @param imgCondition Is the Imageview for which the resource must be set
      * @param conditionsCode is the weather conditions code
      */
@@ -219,29 +219,38 @@ public class MainActivity extends AppCompatActivity implements AccessData{
 
     }
 
+    /**
+     * Implementation of the function in the AccessData interface in order to access the JSON data from RequestWeatherData
+     * @param forecast is the array containing the weather data
+     * @param areaName is the name of the city location
+     */
     @Override
     public void returnData(weather[] forecast, String areaName)
     {
-         /*
+
+        try
+        {
+
+            /*
                 Setting text in textViews
              */
-        try {
-
-
             minTempView.setText("Min:  " + forecast[0].getTempMin() + " °C");
             maxTempView.setText("Max: " + forecast[0].getTempMax() + " °C");
             ConditionView.setText(forecast[0].getWeatherDescription());
             AreaView.setText(areaName);
             setImage(MainActivity.condition, forecast[0].getConditionsCode());
 
+            /*
+                Setting date formats
+             */
             SimpleDateFormat dateFormatday = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
             dateFormatday.applyPattern("EEEE, dd MMM yyyy");
             date.setText(dateFormatday.format(forecast[0].getDate()));
 
 
-                /*
-                    Dealing with the forecast for 5 days
-                 */
+            /*
+                Dealing with the forecast for 5 days
+             */
             tblForecast.removeAllViewsInLayout();
             tblForecast.setStretchAllColumns(true);
             tblForecast.setGravity(Gravity.CENTER);
@@ -252,9 +261,9 @@ public class MainActivity extends AppCompatActivity implements AccessData{
             {
 
 
-                    /*
-                        Storing data from the forecast array into local variables
-                     */
+                /*
+                    Storing data from the forecast array into local variables
+                 */
                 final String Day = forecast[i].getDay();
                 SimpleDateFormat dateFormatday2 = new SimpleDateFormat("dd-MM-yyyy HH:mm", Locale.getDefault());
                 dateFormatday2.applyPattern("dd MMM");
@@ -263,8 +272,15 @@ public class MainActivity extends AppCompatActivity implements AccessData{
                 final String Description = forecast[i].getWeatherDescription();
                 final String MinTemp = "Min:  " + forecast[i].getTempMin() + " °C";
                 final String MaxTemp = "Max: " + forecast[0].getTempMax() + " °C";
+
+                /*
+                    Calculating average temperature for forecast
+                 */
                 int AverageTemp = (forecast[i].getTempMin() + forecast[i].getTempMax()) / 2;
 
+                /*
+                    Setting texts of the textviews
+                 */
                 TextView day = new TextView(MainActivity.this);
                 day.setText(Day);
                 day.setPadding(10, 5, 5, 5);
@@ -297,6 +313,9 @@ public class MainActivity extends AppCompatActivity implements AccessData{
                 description.setTextSize(16);
 
 
+                /*
+                    Setting Image view for weather condition icons
+                 */
                 ImageView iconCondition = new ImageView(MainActivity.this);
 
                 iconCondition.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT));
@@ -307,7 +326,9 @@ public class MainActivity extends AppCompatActivity implements AccessData{
                 layoutParams.height = 120;
                 iconCondition.setLayoutParams(layoutParams);
 
-
+                /*
+                    Adding all the views into LinearLayouts
+                 */
                 final LinearLayout linearLayout = new LinearLayout(MainActivity.this);
                 linearLayout.setOrientation(LinearLayout.VERTICAL);
                 linearLayout.addView(day);
@@ -328,10 +349,16 @@ public class MainActivity extends AppCompatActivity implements AccessData{
                 linearLayout.addView(vline2);
 
                 linearLayout.setGravity(Gravity.CENTER);
+                /*
+                    Handling specific day clicks to display full weather details
+                 */
                 linearLayout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
 
+                        /*
+                            Setting texts of textViews and setting image resources for the weather condition icons
+                         */
                         final LinearLayout linearLayout = new LinearLayout(MainActivity.this);
                         linearLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -375,12 +402,17 @@ public class MainActivity extends AppCompatActivity implements AccessData{
                         description.setGravity(Gravity.CENTER);
                         description.setTextSize(16);
 
+                        /*
+                            Addition of views to LinearLayout
+                         */
                         linearLayout.addView(min);
                         linearLayout.addView(max);
                         linearLayout2.addView(iconCondition2);
                         linearLayout3.addView(description);
 
-
+                        /*
+                            Building of the alert Dialog
+                         */
                         ContextThemeWrapper ctw = new ContextThemeWrapper(MainActivity.this, R.style.Theme_AppCompat_Dialog);
                         AlertDialog.Builder builder = new AlertDialog.Builder(ctw);
 
@@ -412,7 +444,9 @@ public class MainActivity extends AppCompatActivity implements AccessData{
                     }
                 });
 
-
+                /*
+                    Addition of seperate LinearLayout to produce Vertical Divider
+                 */
                 final LinearLayout verticalBorder = new LinearLayout(MainActivity.this);
                 verticalBorder .setOrientation(LinearLayout.VERTICAL);
                 verticalBorder.setBackgroundColor(Color.WHITE);
@@ -441,7 +475,9 @@ public class MainActivity extends AppCompatActivity implements AccessData{
             }
 
 
-
+            /*
+                Addition of row to table
+             */
             tblForecast.addView(tr);
 
 
@@ -451,7 +487,10 @@ public class MainActivity extends AppCompatActivity implements AccessData{
             Toast.makeText(MainActivity.this,"Please Refresh",Toast.LENGTH_LONG).show();
         }
 
-            MainActivity.load.setVisibility(View.GONE);
+        /*
+            Stopping the progress bar
+         */
+        MainActivity.load.setVisibility(View.GONE);
 
     }
 }
