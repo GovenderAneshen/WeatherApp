@@ -54,17 +54,30 @@
         android:layout_marginBottom="52dp">
 
         <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            android:text="@string/Date"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="12dp" />
+
+        <TextView
             android:id="@+id/txtArea"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif"
             android:text="@string/Area"
             android:textColor="@android:color/black"
-            android:textSize="50sp" />
+            android:textSize="50sp"
+
+            android:layout_marginLeft="20dp"
+            android:layout_alignTop="@+id/txtDate"
+            android:layout_alignEnd="@+id/progressBar"
+            android:layout_marginTop="12dp" />
 
         <TextView
             android:id="@+id/txtCondition"
@@ -73,7 +86,7 @@
 
             android:layout_below="@+id/txtMax"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="17dp"
             android:layout_weight="0.20"
             android:capitalize="none"
             android:fontFamily="sans-serif"
@@ -85,18 +98,19 @@
             android:textColor="@android:color/black"
             android:textSize="26sp" />
 
+
         <TextView
             android:id="@+id/txtMinTemp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:layout_alignStart="@+id/txtArea"
             android:layout_below="@+id/txtArea"
-            android:layout_marginTop="25dp"
             android:fontFamily="sans-serif"
             android:text="@string/MinTemp"
-            android:textColor="@android:color/black"
-            android:textSize="30sp" />
+            android:textColor="@color/minGreen"
+            android:textSize="30sp"
+            android:layout_alignBottom="@+id/progressBar"
+            android:layout_alignStart="@+id/txtArea"
+            android:layout_marginTop="20dp"/>
 
         <TextView
             android:id="@+id/txtMax"
@@ -105,10 +119,10 @@
 
             android:layout_alignStart="@+id/txtArea"
             android:layout_below="@+id/txtMinTemp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="sans-serif"
             android:text="@string/MaxTemp"
-            android:textColor="@android:color/black"
+            android:textColor="@color/maxRed"
             android:textSize="30sp" />
 
         <ImageView
@@ -116,11 +130,11 @@
             android:layout_width="193dp"
             android:layout_height="232dp"
 
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/txtArea"
-            android:layout_marginTop="23dp"
             android:foregroundGravity="bottom|center_horizontal"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:layout_alignBottom="@+id/txtCondition"
+            android:layout_alignParentEnd="true"
+           />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -149,5 +163,21 @@
         android:layout_marginBottom="21dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TableLayout
+        android:id="@+id/tblForecast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/relativeLayout"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView4"
+        android:layout_marginTop="271dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </TableLayout>
 
 </RelativeLayout>

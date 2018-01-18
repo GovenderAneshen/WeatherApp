@@ -3,9 +3,9 @@ package com.govenderaneshen.weathernow;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
+import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -14,8 +14,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import static com.govenderaneshen.weathernow.MainActivity.condition;
 
 /**
  * @author Govender Aneshen
@@ -32,13 +30,18 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
     private URL weatherURL;
     private HttpURLConnection urlConnection = null;
     private Context thisContext;
+    private weather[] forecast;
+    private AccessData dataOut;
     public String areaName;
 
 
     public RequestWeatherData(Context context)
     {
         thisContext = context;
+        dataOut = (AccessData)context;
     }
+
+
 
     /**
      * Used to retrieve the weather data
@@ -120,93 +123,34 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
             /*
                 JSON objects of separate weather information
             */
-            JSONObject jsonWeather = jsresponse.getJSONObject("main");
-            JSONArray jsonConditionArray = jsresponse.optJSONArray("weather");
-            JSONObject jsonCondition = jsonConditionArray.getJSONObject(0);
+            JSONArray jsonList = jsresponse.optJSONArray("list");
+            forecast = new weather[jsonList.length()];
+            JSONObject jsonCity = jsresponse.getJSONObject("city");
+            areaName = jsonCity.getString("name");
+            TemperatureConversions tempCelsius = new TemperatureConversions();
 
-
-             /*
+            for(int i =0;i<jsonList.length();i++)
+            {
+                   /*
             Retrieving Data from JSON object
             */
-            TemperatureConversions tempCelsius = new TemperatureConversions();
-            areaName = jsresponse.getString("name");
-            String weatherDescription = jsonCondition.getString("description");
-            String conditionsCode = jsonCondition.getString("icon");
-            int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_min")));
-            int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonWeather.getString("temp_max")));
+                JSONObject jsonWeatherObject =  jsonList.getJSONObject(i);
+                JSONArray jsonConditionArray = jsonWeatherObject.optJSONArray("weather");
+                JSONObject jsonCondition = jsonConditionArray.getJSONObject(0);
+                JSONObject jsonTemp = jsonWeatherObject.getJSONObject("temp");
 
+                String date = jsonWeatherObject.getString("dt");
+                String weatherDescription = jsonCondition.getString("description");
+                String conditionsCode = jsonCondition.getString("icon");
+                int tempMin = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonTemp.getString("min")));
+                int tempMax = tempCelsius.kelvinToCelsius(Double.parseDouble(jsonTemp.getString("max")));
 
-            /*
-                Setting text in textViews
-             */
+                forecast[i] = new weather(Long.valueOf(date),weatherDescription,conditionsCode,tempMin,tempMax);
 
-                MainActivity.minTempView.setText("Min:  "+tempMin+ " °C");
-                MainActivity.maxTempView.setText("Max: "+tempMax+ " °C");
-                MainActivity.ConditionView.setText(weatherDescription);
-                MainActivity.AreaView.setText(areaName);
-        /*
-         * Switch statement to allocate the correct icon based on the weather condition
-         */
-
-            switch(conditionsCode)
-            {
-                case "01d":
-                    condition.setImageResource(R.drawable.sun);
-                    break;
-                case "01n":
-                    condition.setImageResource(R.drawable.moon);
-                    break;
-                case "02d":
-                    condition.setImageResource(R.drawable.daycloud);
-                    break;
-                case "02n":
-                    condition.setImageResource(R.drawable.nightcloud);
-                    break;
-                case "03d":
-                    condition.setImageResource(R.drawable.cloud);
-                    break;
-                case "03n":
-                    condition.setImageResource(R.drawable.cloud);
-                    break;
-                case "04d":
-                    condition.setImageResource(R.drawable.brokencloud);
-                    break;
-                case "04n":
-                    condition.setImageResource(R.drawable.brokencloud);
-                    break;
-                case "09d":
-                    condition.setImageResource(R.drawable.showers);
-                    break;
-                case "09n":
-                    condition.setImageResource(R.drawable.showers);
-                    break;
-                case "10d":
-                    condition.setImageResource(R.drawable.rainday);
-                    break;
-                case "10n":
-                    condition.setImageResource(R.drawable.rainnight);
-                    break;
-                case "11d":
-                    condition.setImageResource(R.drawable.thunder);
-                    break;
-                case "11n":
-                    condition.setImageResource(R.drawable.thunder);
-                    break;
-                case "13d":
-                    condition.setImageResource(R.drawable.snow);
-                    break;
-                case "13n":
-                    condition.setImageResource(R.drawable.snow);
-                    break;
-                case "50d":
-                    condition.setImageResource(R.drawable.mist);
-                    break;
-                case "50n":
-                    condition.setImageResource(R.drawable.mist);
-                    break;
             }
 
-            MainActivity.load.setVisibility(View.GONE);
+            dataOut.returnData(forecast,areaName);
+
 
 
 
@@ -215,8 +159,10 @@ public class RequestWeatherData extends AsyncTask <String,Void,String>
         /*
             Error with JSON result
          */
-        catch (JSONException e) {
-            e.printStackTrace();
+        catch (Exception e)
+        {
+            MainActivity.load.setVisibility(View.GONE);
+            Toast.makeText(thisContext,"Please Refresh",Toast.LENGTH_LONG).show();
         }
 
 
