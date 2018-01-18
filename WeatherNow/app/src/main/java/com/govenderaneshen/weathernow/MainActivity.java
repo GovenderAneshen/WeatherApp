@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     static TextView date;
     static TableLayout tblForecast;
     static ProgressBar load;
+    static String stringWeatherData;
 
 
     private double currentLongitude;
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             RequestWeatherData weatherData = new RequestWeatherData(getApplicationContext());
             String url = "http://api.openweathermap.org/data/2.5/forecast/daily?lat="+String.valueOf(currentLatitude)+"&lon="+String.valueOf(currentLongitude)+"&cnt=6&appid=927d09bc49dbee6aac7f5cb1df707542";
             weatherData.execute(url);
+            Toast.makeText(getApplicationContext(),stringWeatherData,Toast.LENGTH_LONG).show();
 
         }
         else

@@ -168,11 +168,11 @@
     <TableLayout
         android:id="@+id/tblForecast"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/relativeLayout"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/imageView4"
-        android:layout_marginTop="233dp">
+        android:layout_marginTop="271dp">
 
         <TableRow
             android:layout_width="match_parent"
